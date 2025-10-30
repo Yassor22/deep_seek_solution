@@ -56,7 +56,7 @@ stagepT= st.selectbox('Post T stage',['T1','T2','T3a','T3b','T3c','T3d','T4a','T
 StagpN= st.selectbox('Post N stage',['N0','N1a','N1b','N1c','N2a','N2b','N3'])
 
 sphincterp= st.selectbox('Sphincters involvment', ['Involved','Spared'])
-
+btn=st.button('Submit')
 if btn:
     try:
         # Load model and scaler
