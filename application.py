@@ -57,35 +57,61 @@ sphincterp= st.selectbox('Sphincters involvment', ['Involved','Spared'])
 
 btn=st.button('Submit')
 
-if btn== True:
-    scaler= jb.load('Scaler.pkl')
-    scaled_age = scaler.transform([[Age]])[0][0]
-    scaled_distance = scaler.transform([[distance]])[0][0]
-    scaled_quadrants_involved = scaler.transform([[quadrants_involved]])[0][0]
-    scaled_dimensions = scaler.transform([[dimensions]])[0][0]
-    scaled_length = scaler.transform([[length]])[0][0]
-    model= jb.load('svc_model.pkl')
-    gender_mapping={'Female':0, 'Male':1}
-    gender_encoded= gender_mapping[gender]
-    stageT_mapping={ 'T1':0,'T2':1, 'T3a':2,'T3b':3,'T3c':4,'T4a':5,'T4b':6}
-    stageT_encoded= stageT_mapping[stageT]
-    stageN_mapping={'N0':0,'N1':1,'N2a':2,'N2b':3,'N2c':4, 'N3a':5,'N3b':6,'N3c':7}
-    stageN_encoded= stageN_mapping[StagN]
-    sphincter_mapping={'Yes':0, 'No':1}
-    sphincter_encoded= sphincter_mapping[sphincter]
-    biopsy_mapping={'Well differentiated adenocarcinoma':8,'Moderately differentiated adenocarcinoma':6,'poorly differentiated adenocarcinoma':4,'Mucoid adeoncarcinoma':1}
-    biopsy_encoded= biopsy_mapping[biopsy]
-    TNT_mapping={'Short course':1,'long course':0}
-    TNT_encoded= TNT_mapping[tnt_c]
-    course_mapping={'Regression':0, 'Stationary':1,'Progression':2}
-    course_encoded= course_mapping[course]
+if btn:
+    try:
+        # Load model and scaler
+        model = jb.load('svc_model.pkl')
+        scaler = jb.load('Scaler.pkl')
+        
+        # DEBUG: Check what the model expects
+        st.write(f"🔍 Model expects {model.n_features_in_} features")
+        st.write(f"🔍 Scaler expects {scaler.n_features_in_} features")
+        
+        # Your existing encoding code...
+        gender_mapping = {'Female': 0, 'Male': 1}
+        gender_encoded = gender_mapping[gender]
+        stageT_mapping = {'T1': 0, 'T2': 1, 'T3a': 2, 'T3b': 3, 'T3c': 4, 'T4a': 5, 'T4b': 6}
+        stageT_encoded = stageT_mapping[stageT]
+        stageN_mapping = {'N0': 0, 'N1': 1, 'N2a': 2, 'N2b': 3, 'N2c': 4, 'N3a': 5, 'N3b': 6, 'N3c': 7}
+        stageN_encoded = stageN_mapping[StagN]
+        sphincter_mapping = {'Yes': 0, 'No': 1}
+        sphincter_encoded = sphincter_mapping[sphincter]
+        biopsy_mapping = {
+            'Well differentiated adenocarcinoma': 8,
+            'Moderately differentiated adenocarcinoma': 6,
+            'poorly differentiated adenocarcinoma': 4,
+            'Mucoid adeoncarcinoma': 1
+        }
+        biopsy_encoded = biopsy_mapping[biopsy]
+        TNT_mapping = {'Short course': 1, 'long course': 0}
+        TNT_encoded = TNT_mapping[tnt_c]
+        course_mapping = {'Regression': 0, 'Stationary': 1, 'Progression': 2}
+        course_encoded = course_mapping[course]
 
-    input_data=np.array([[scaled_age,scaled_length,scaled_distance,scaled_dimensions,scaled_quadrants_involved,gender_encoded,stageT_encoded,stageN_encoded,sphincter_encoded,biopsy_encoded,TNT_encoded,course_encoded]])
-   
-    prediction_encoded = model.predict(input_data)[0]
-    if prediction_encoded == 0:
+        # Create input array with ALL features in the correct order
+        input_data = np.array([[
+            Age, length, distance, dimensions, quadrants_involved,
+            gender_encoded, stageT_encoded, stageN_encoded, sphincter_encoded,
+            biopsy_encoded, TNT_encoded, course_encoded
+        ]])
+        
+        st.write(f"📊 Input data shape: {input_data.shape}")
+        
+        # Scale the input
+        input_scaled = scaler.transform(input_data)
+        
+        # Make prediction
+        prediction_encoded = model.predict(input_scaled)[0]
+        
+        # Display result
+        if prediction_encoded == 0:
             st.success('Your patient mostly will get Complete pathological response')
-    elif prediction_encoded == 1:
+        elif prediction_encoded == 1:
             st.error('Unfortunately, Your patient mostly will not get pathological response')
-    else:
+        else:
             st.warning('Your patient mostly will get partial pathological response')
+            
+    except Exception as e:
+        st.error(f"❌ Error: {str(e)}")
+        import traceback
+        st.code(traceback.format_exc())
