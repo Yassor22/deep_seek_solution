@@ -83,10 +83,10 @@ if btn:
         sphincter_encoded = sphincter_mapping[sphincter]
         
         biopsy_mapping = {
-            'Well differentiated adenocarcinoma': 2,
-            'Moderately differentiated adenocarcinoma': 1,
-            'poorly differentiated adenocarcinoma': 0,
-            'Mucoid adeoncarcinoma': 0
+            'Well differentiated adenocarcinoma': 3,
+            'Moderately differentiated adenocarcinoma': 0,
+            'poorly differentiated adenocarcinoma': 2,
+            'Mucoid adeoncarcinoma':1
         }
         biopsy_encoded = biopsy_mapping[biopsy]
         
