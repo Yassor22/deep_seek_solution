@@ -4,7 +4,7 @@ import pandas as pd
 import joblib as jb
 from sklearn.preprocessing import StandardScaler
 
-df= pd.read_csv('/augmented_rectal_cancer_data.csv')
+df= pd.read_csv('augmented_rectal_cancer_data.csv')
 st.sidebar.header('This is a predictive model for locally advanced Rectal cancer to TNT')
 st.sidebar.image('https://tse4.mm.bing.net/th/id/OIP.j2TJw0vapJPgHsqrhGYUfgHaHa?pid=ImgDet&w=185&h=185&c=7&dpr=1.1&o=7&rm=3')
 st.sidebar.write('This application has been built to predicit the reponse of locally advanced Rectal cancer to the types of total neoadjuvant therapy')
