@@ -94,7 +94,7 @@ if btn:
 
         # Create input array in the correct order
         input_data = np.array([[
-            Age, gender_encoded, distance, quadrants_involved, length,
+            Age, gender_encoded, distance, length,
             stageT_encoded, stageN_encoded, sphincter_encoded, dimensions,
             biopsy_encoded, TNT_encoded, course_encoded
         ]])
