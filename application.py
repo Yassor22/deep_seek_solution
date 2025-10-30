@@ -58,7 +58,7 @@ sphincterp= st.selectbox('Sphincters involvment', ['Involved','Spared'])
 btn=st.button('Submit')
 
 if btn== True:
-    scaler= jb.load('scaler.pkl')
+    scaler= jb.load('Scaler.pkl')
     scaled_age = scaler.transform([[Age]])[0][0]
     scaled_distance = scaler.transform([[distance]])[0][0]
     scaled_quadrants_involved = scaler.transform([[quadrants_involved]])[0][0]
