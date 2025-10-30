@@ -64,7 +64,11 @@ if btn:
         # Load model and scaler
         model = jb.load('svc_model.pkl')
         scaler = jb.load('Scaler.pkl')
-        
+        scaled_age = scaler.transform([[Age]])[0][0]
+        scaled_distance = scaler.transform([[distance]])[0][0]
+        scaled_quadrants_involved = scaler.transform([[quadrants_involved]])[0][0]
+        scaled_dimensions = scaler.transform([[dimensions]])[0][0]
+        scaled_length = scaler.transform([[length]])[0][0]
         # Apply mappings (consistent with your augmented data)
         gender_mapping = {'Female': 0, 'Male': 1}
         gender_encoded = gender_mapping[gender]
@@ -94,19 +98,17 @@ if btn:
 
         # Create input array in the correct order
         input_data = np.array([[
-            Age, gender_encoded, distance, length,
-            stageT_encoded, stageN_encoded, sphincter_encoded, dimensions,
+            scaled_age, gender_encoded, scaled_distance, scaled_length,
+            stageT_encoded, stageN_encoded, sphincter_encoded, scaled_dimensions,
             biopsy_encoded, TNT_encoded, course_encoded
         ]])
         
         st.write(f"🔍 Input data shape: {input_data.shape}")
         st.write(f"📊 Sample values: {input_data[0]}")
         
-        # Scale the input
-        input_scaled = scaler.transform(input_data)
-        
+    
         # Make prediction
-        prediction_encoded = model.predict(input_scaled)[0]
+        prediction_encoded = model.predict(input_data)[0]
         
         # Display result
         st.write("---")
