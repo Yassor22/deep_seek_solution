@@ -36,8 +36,8 @@ antorp= st.selectbox('Site',['Anterior','posterior','lateral','All'])
 invasion= st.selectbox('Invsion of surrounding sturctures',['Yes', 'No'])
 
 st.write('Pretreatment MRI findings')
-stageT= st.selectbox('T stage',['T1','T2','T3a','T3b','T3c','T3d','T4a','T4b'])
-StagN= st.selectbox('N stage',['N0','N1a','N1b','N1c','N2a','N2b','N2c','N3a','N3b','N3c'])
+stageT= st.selectbox('T stage',['T1','T2','T3a','T3b','T3c','T4a','T4b'])
+StagN= st.selectbox('N stage',['N0','N1','N2a','N2b','N2c','N3a','N3b','N3c'])
 dimensions= st.number_input('tumour dimensions')
 sphincter= st.selectbox('Sphincters involvment', ['Yes','No'])
 
