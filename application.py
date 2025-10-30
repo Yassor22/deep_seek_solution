@@ -10,8 +10,8 @@ df = pd.read_csv('augmented_rectal_cancer_data.csv')
 st.sidebar.header('This is a predictive model for locally advanced Rectal cancer to TNT')
 st.sidebar.image('https://tse4.mm.bing.net/th/id/OIP.j2TJw0vapJPgHsqrhGYUfgHaHa?pid=ImgDet&w=185&h=185&c=7&dpr=1.1&o=7&rm=3')
 st.sidebar.write('This application has been built to predict the response of locally advanced Rectal cancer to the types of total neoadjuvant therapy')
-st.sidebar.write('The used model is RandomForestClassifier model with accuracy_score 78')
-st.sidebar.write('Limitation : small-sized data\n If you can share deidentified data please Contact me')
+st.sidebar.write('The used model is SVC model with accuracy_score 82')
+st.sidebar.write('Limitation : small-sized data\n If you can share deidentifiable data please Contact me')
 st.sidebar.write('Created by ')
 st.sidebar.markdown(' "Yasser Ali Okasha"')
 st.sidebar.write('Supervised by ')
@@ -25,39 +25,37 @@ a1.image('cancer.JPG')
 a2.image('radiotherapy.JPG')
 a3.image('surgery.JPG')
 
-st.text('Please Fill the following parameters about your patient to predict the Response')
-
-# Input fields that match your augmented data
+st.text('Please Fill the following parameters about your ptient to predict the Response')
 st.write('Demographic Data')
-gender = st.selectbox('Gender', ['Male', 'Female'])
-Age = st.slider('Age', 10, 108, 50)
-
+gender= st.selectbox('Gender',['Male','Female'])
+Age= st.slider('Age',10,108)
+bmi= st.number_input('BMI')
 st.write('DRE')
-distance = st.number_input('Distance from anal verge in CM', min_value=0.0, value=3.0, step=0.1)
-quadrants_involved = st.slider('Quadrants involved', 1, 4, 2)
-length = st.number_input('Anal Canal length in CM', min_value=0.0, value=3.0, step=0.1)
+length= st.number_input('Anal Canal length in CM')
+distance= st.number_input('Distance from anal verge in CM')
+quadrants_involved= st.slider('Quadrants involved', 0,4)
+antorp= st.selectbox('Site',['Anterior','posterior','lateral','All'])
+invasion= st.selectbox('Invsion of surrounding sturctures',['Yes', 'No'])
 
 st.write('Pretreatment MRI findings')
-stageT = st.selectbox('T stage', ['T1', 'T2', 'T3a', 'T3b', 'T3c', 'T4a', 'T4b'])
-StagN = st.selectbox('N stage', ['N0', 'N1', 'N2a', 'N2b', 'N2c', 'N3a', 'N3b', 'N3c'])
-dimensions = st.number_input('Tumour dimensions', min_value=0.0, value=2.0, step=0.1)
-sphincter = st.selectbox('Sphincters involvement', ['No', 'Yes'])
+stageT= st.selectbox('T stage',['T1','T2','T3a','T3b','T3c','T3d','T4a','T4b'])
+StagN= st.selectbox('N stage',['N0','N1a','N1b','N1c','N2a','N2b','N3'])
+dimensions= st.number_input('tumour dimensions')
+sphincter= st.selectbox('Sphincters involvment', ['Yes','No'])
 
 st.write('Colonoscopic Biopsy')
-biopsy = st.selectbox('Histopathological result of the Biopsy', [
-    'Well differentiated adenocarcinoma',
-    'Moderately differentiated adenocarcinoma',
-    'poorly differentiated adenocarcinoma',
-    'Mucoid adeoncarcinoma'
-])
+biopsy=st.selectbox('Histopatholoical result of the Biopsy',['Well differentiated adenocarcinoma','Moderately differentiated adenocarcinoma','poorly differentiated adenocarcinoma','Mucoid adeoncarcinoma'])
 
 st.write('TNT details')
-tnt_c = st.selectbox('TNT Radiation', ['Short course', 'Long course'])
+tnt_c= st.selectbox('TNT Radiation', ['Short course','long course'])
+tnt= st.selectbox('TNT Chemotherapy', ['induction','Consolidation'])
 
-st.write('Post-treatment MRI findings')
-course = st.selectbox('Radiological Response', ['Regression', 'Stationary', 'Progression'])
+st.write('Postreatment MRI findings')
+course=st.selectbox('Radiological Response',['Regression', 'Stationary','Progression'])
+stagepT= st.selectbox('Post T stage',['T1','T2','T3a','T3b','T3c','T3d','T4a','T4b'])
+StagpN= st.selectbox('Post N stage',['N0','N1a','N1b','N1c','N2a','N2b','N3'])
 
-btn = st.button('Submit')
+sphincterp= st.selectbox('Sphincters involvment', ['Involved','Spared'])
 
 if btn:
     try:
