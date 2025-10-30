@@ -4,7 +4,7 @@ import pandas as pd
 import joblib as jb
 from sklearn.preprocessing import StandardScaler
 
-df= pd.read_excel('augmented_rectal_cancer_data.xlsx')
+df= pd.read_excel('/augmented_rectal_cancer_data.xlsx')
 st.sidebar.header('This is a predictive model for locally advanced Rectal cancer to TNT')
 st.sidebar.image('https://tse4.mm.bing.net/th/id/OIP.j2TJw0vapJPgHsqrhGYUfgHaHa?pid=ImgDet&w=185&h=185&c=7&dpr=1.1&o=7&rm=3')
 st.sidebar.write('This application has been built to predicit the reponse of locally advanced Rectal cancer to the types of total neoadjuvant therapy')
@@ -18,10 +18,10 @@ st.sidebar.write('Contact details ')
 st.sidebar.write("Email: yasser.okasha@alexmed.edu.eg")
 st.title('Prediction of locally advanced rectal cancer response to TNT')
 a1, a2,a3 = st.columns(3)
-a1.image('cancer.JPG')
-a2.image('radiotherapy.JPG')
-a2.image('Capture.JPG')
-a3.image('surgery.JPG')
+a1.image('/cancer.JPG')
+a2.image('/radiotherapy.JPG')
+a2.image('/Capture.JPG')
+a3.image('/surgery.JPG')
 
 st.text('Please Fill the following parameters about your ptient to predict the Response')
 st.write('Demographic Data')
